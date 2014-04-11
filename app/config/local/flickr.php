@@ -6,5 +6,6 @@
  * Time: 11:18 AM
  */
 return [
-    'api_key' => 'c9a47e4f7820988abba5bd83283b1115',
+    'api_key' => '084474c4a75ff5137f816739c3e991e2',
+    'secret'  => '1d9ec2c62ac3667b'
 ];

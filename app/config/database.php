@@ -55,9 +55,9 @@ return array(
 		'mysql' => array(
 			'driver'    => 'mysql',
 			'host'      => 'itp460.usc.edu',
-			'database'  => 'dvd',
-			'username'  => 'student',
-			'password'  => 'ttrojan',
+			'database'  => 'caraway',
+			'username'  => 'caraway',
+			'password'  => 'bailey95',
 			'charset'   => 'utf8',
 			'collation' => 'utf8_unicode_ci',
 			'prefix'    => '',

@@ -1,12 +1,10 @@
 <?php
 use \Symfony\Component\HttpFoundation\Session\Session;
 
-    $session = new Session();
-
-
+$session = new Session();
 ?>
 
-<html xmlns="http://www.w3.org/1999/html">
+<html>
 
 <link rel="stylesheet" href="/css/bootstrap.css">
 
@@ -17,6 +15,7 @@ use \Symfony\Component\HttpFoundation\Session\Session;
 
 </head>
 <body>
+
 <nav class="navbar navbar-default navbar-fixed-top" role="navigation">
     <div class="container-fluid">
         <!-- Brand and toggle get grouped for better mobile display -->
@@ -62,61 +61,72 @@ use \Symfony\Component\HttpFoundation\Session\Session;
     </div><!-- /.container-fluid -->
 </nav>
 
-
 <!-- Modal -->
 <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                <h1 class="modal-title">Pin It!</h1>
+                <h1 class="modal-title">Don't want it anymore?</h1>
             </div>
-            <form action= "/pin" method="post">
-            <div class="modal-body">
-                <h3> Please Choose a Category</h3>
-                <input id="picture-url" type="hidden" name="url"  />
-                    <select name="category">
-                        <option value="1">Animals</option>
-                        <option value="2">Clothing</option>
-                        <option value="3">Home</option>
-                        <option value="4">Photography</option>
-                    </select>
-                <br>
-                <h3>Add a Description:</h3>
-                <input type="text" style="width: 300px" name="desc"  />
-            </div>
-            <div class="modal-footer">
-            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                <input type="submit" class="btn btn-default" style= "width:200px"  value="Pin It">
-            </div>
+            <form action= "/delete" method="post">
+                <div class="modal-body">
+                    <h3> Are you sure you would like to delete this pin?</h3>
+                    <input id="picture-url" type="hidden" name="url"  />
+                    <input id="picture-cat" type="hidden" name="cat"  />
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    <input type="submit" class="btn btn-default" style= "width:200px"  value="Delete">
+                </div>
             </form>
 
         </div><!-- /.modal-content -->
     </div><!-- /.modal-dialog -->
 </div><!-- /.modal -->
 
-</body>
-
-
+<h1 align="center">
+    <?php echo $category[0]->category;?>
+</h1>
 
 <?php
-    foreach($results as $pic):
-        $url = "'http://farm".$pic->farm.".staticflickr.com/".$pic->server."/".$pic->id."_".$pic->secret.".jpg'";
-        ?>
-        <div id="columns">
-            <figure>
-                <?php
-                echo "<img src=".$url.">";
-                echo "<a data-toggle='modal' href='#myModal' data-url=".$url." class='btn btn-primary btn-lg'>Pin It!</a>";
-                ?>
-            </figure>
-        </div>
-<?php
 
+$flash = $session->getFlashBag()->get('statusMessage');
 
-        //<figcaption>Rapunzel, clothed in 1820’s period fashion</figcaption>
-    endforeach;
+if($flash):
 ?>
 
+<div align = "center" class="alert alert-success">
+    <?php
+    echo $flash[0];
+    endif; ?>
+</div>
+<?php
+foreach($results as $pic):
+    $url = $pic->link;
+    $cat = $pic->category_id;
+    $desc = "";
+    if($pic->description){
+        $desc = $pic->description;
+    }
+    ?>
+    <div id="columns" align="center">
+        <figure>
+            <?php
+            echo "<img src=".$url.">";?>
+            <figcaption><?php echo $desc ?></figcaption>
+            <div align="right">
+            <?php
+            echo "<a data-toggle='modal' href='#myModal' data-url=".$url." data-cat=".$cat." class='btn btn-xs btn-default'>x</a>";
+        ?>
+            </div>
+        </figure>
+    </div>
+    <?php
 
+
+endforeach;
+?>
+
+</body>
 </html>

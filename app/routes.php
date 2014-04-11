@@ -1,26 +1,47 @@
 <?php
 
-/*
-|--------------------------------------------------------------------------
-| Application Routes
-|--------------------------------------------------------------------------
-|
-| Here is where you can register all of the routes for an application.
-| It's a breeze. Simply tell Laravel the URIs it should respond to
-| and give it the Closure to execute when that URI is requested.
-|
-*/
+use \Symfony\Component\HttpFoundation\Session\Session;
 
 Route::get('/', function()
 {
 	return View::make('hello');
 });
 
-
-Route::get('/search', 'DVDController@getBoxes');
-Route::get('/results', 'DVDController@listMovies');
-Route::get('/dvds/create', 'DVDController@getBoxes2');
-Route::post('/dvds', 'DVDController@add');
 Route::get('/flickrSearch', 'FlickrController@search');
 Route::get('/flickrResults', 'FlickrController@getResults');
+Route::get('/login', function(){
+    return View::make('login');
+});
+
+Route::post('/login-process', 'LoginController@validate');
+Route::get('/dashboard', function(){
+    return View::make('dashboard');
+});
+
+Route::get('/signUp', function(){
+    return View::make('signUp');
+});
+
+Route::post('/signUp-process', 'LoginController@signUp');
+
+Route::get('/logout', 'LoginController@logout');
+Route::post('/pin', 'DBController@insert');
+Route::get('/mypins/get/{category}', function($category){
+
+    $session = new Session();
+    $id = $session->get('id');
+    $cat = Database::getCat($category);
+    $results = Database:: find($category, $id);
+
+    return View::make('mypins', [
+        'results' => $results,
+        'category' => $cat
+    ]);
+});
+
+
+Route::post('/upload', 'FlickrController@upload');
+Route::post('/delete', 'DBController@deletePin');
+
+
 

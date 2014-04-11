@@ -1,2 +1,11 @@
 vendor/
 .DS_Store
+composer.lock
+.idea/*
+.gitignore.swp
+.idea/499-FInal.iml
+.idea/encodings.xml
+.idea/misc.xml
+.idea/modules.xml
+.idea/scopes/scope_settings.xml
+.idea/vcs.xml
