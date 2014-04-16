@@ -20,13 +20,13 @@ if($session->get('status') == 'badLogin'){
 ?>
 
 <html>
-<link rel="stylesheet" href="/css/bootstrap.css">
+<link rel="stylesheet" href="/css/noSpace.css">
 <head></head>
 
 <body>
-<div class="jumbotron" style="background-image: url(http://us.123rf.com/400wm/400/400/martinusg/martinusg0901/martinusg090100052/4167445-bright-and-colorful-thumb-tacks-close-up.jpg); background-size: 100%;">
+<div class="jumbotron"  style="background-color: blueviolet">
     <h1 align="center" style="color: #ffffff">Pin Your Interests!</h1>
-  <p align="center" style="color: #ffffff">Daria Caraway's Final ITP 499 Project</p>
+    <p align="center" style="color: #ffffff">Daria Caraway's Final ITP 499 Project</p>
 </div>
 
 

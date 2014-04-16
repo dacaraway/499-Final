@@ -98,25 +98,44 @@ use \Symfony\Component\HttpFoundation\Session\Session;
 </body>
 
 
-
+<div id="container">
 <?php
     foreach($results as $pic):
         $url = "'http://farm".$pic->farm.".staticflickr.com/".$pic->server."/".$pic->id."_".$pic->secret.".jpg'";
         ?>
-        <div id="columns">
-            <figure>
-                <?php
-                echo "<img src=".$url.">";
-                echo "<a data-toggle='modal' href='#myModal' data-url=".$url." class='btn btn-primary btn-lg'>Pin It!</a>";
-                ?>
-            </figure>
+        <div id="inside" class="item" align="center">
+            <?php
+            echo "<img src=".$url." class='item2'>";
+            echo "<a data-toggle='modal' href='#myModal' data-url=".$url." class='btn btn-primary btn-lg'>Pin It!</a>";
+            ?>
         </div>
 <?php
-
-
         //<figcaption>Rapunzel, clothed in 1820’s period fashion</figcaption>
     endforeach;
 ?>
+</div>
+
+<script>
+    $(function () {
+        var count = $('.item img').each(function () {
+            var $this = $(this);
+            $this.load(function () {
+                $this.attr('width', $this.width());
+                $this.attr('height', $this.height());
+                console.log(count);
+                if (--count == 0) run();
+            });
+        }).length;
+        console.log(count);
+    });
+
+</script>
+<script src="/js/masonry.pkgd.min.js"></script>
+<script>
+    function run() {
+        var ms = new Masonry($('#container')[0], { columnWidth: 60, itemSelector: '.item' });
+    }
+</script>
 
 
 </html>

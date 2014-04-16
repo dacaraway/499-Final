@@ -101,32 +101,57 @@ if($flash):
     echo $flash[0];
     endif; ?>
 </div>
-<?php
-foreach($results as $pic):
-    $url = $pic->link;
-    $cat = $pic->category_id;
-    $desc = "";
-    if($pic->description){
-        $desc = $pic->description;
-    }
-    ?>
-    <div id="columns" align="center">
-        <figure>
-            <?php
-            echo "<img src=".$url.">";?>
-            <figcaption><?php echo $desc ?></figcaption>
-            <div align="right">
-            <?php
-            echo "<a data-toggle='modal' href='#myModal' data-url=".$url." data-cat=".$cat." class='btn btn-xs btn-default'>x</a>";
-        ?>
-            </div>
-        </figure>
-    </div>
+
+
+<div id="container">
     <?php
+    foreach($results as $pic):
+        $url = $pic->link;
+        $cat = $pic->category_id;
+        $desc = "";
+        if($pic->description){
+            $desc = $pic->description;
+        }
+        ?>
+            <div id="inside" class="item" align="center">
+                <?php
+                echo "<img src=".$url." class='item2'>";
+                echo $desc;
+                   ?>
+                <div align="right">
+                    <?php
+                    echo "<a data-toggle='modal' href='#myModal' data-url=".$url." data-cat=".$cat." class='btn btn-xs btn-default'>x</a>";
+                    ?>
+                </div>
+            </div>
+        <?php
+        //<figcaption>Rapunzel, clothed in 1820’s period fashion</figcaption>
+    endforeach;
+    ?>
+</div>
 
+<script>
+    $(function () {
+        var count = $('.item img').each(function () {
+            var $this = $(this);
+            $this.load(function () {
+                $this.attr('width', $this.width());
+                $this.attr('height', $this.height());
+                console.log(count);
+                if (--count == 0) run();
+            });
+        }).length;
+        console.log(count);
+    });
 
-endforeach;
-?>
+</script>
+<script src="/js/masonry.pkgd.min.js"></script>
+<script>
+    function run() {
+        var ms = new Masonry($('#container')[0], { columnWidth: 30, itemSelector: '.item' });
+    }
+</script>
+
 
 </body>
 </html>
